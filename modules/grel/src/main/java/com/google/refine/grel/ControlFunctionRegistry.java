@@ -108,6 +108,7 @@ import com.google.refine.expr.functions.strings.DetectLanguage;
 import com.google.refine.expr.functions.strings.Diff;
 import com.google.refine.expr.functions.strings.Encode;
 import com.google.refine.expr.functions.strings.EndsWith;
+import com.google.refine.expr.functions.strings.EnglishTranslate;
 import com.google.refine.expr.functions.strings.Escape;
 import com.google.refine.expr.functions.strings.Find;
 import com.google.refine.expr.functions.strings.Fingerprint;
@@ -269,6 +270,7 @@ public class ControlFunctionRegistry {
         registerFunction("match", new Match());
         registerFunction("find", new Find());
         registerFunction("levenshteinDistance", new LevenshteinDistance());
+        registerFunction("EnglishTranslate", new EnglishTranslate());
         registerFunction("normalize", new Normalize());
 
         registerFunction("parseUri", new ParseUri());
