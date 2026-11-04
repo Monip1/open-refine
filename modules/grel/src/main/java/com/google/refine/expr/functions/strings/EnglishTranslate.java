@@ -60,11 +60,16 @@ public class EnglishTranslate implements Function {
     public Object call(Properties bindings, Object[] args) {
         if (args != null && args.length == 1 && args[0] instanceof String ) {
             String s1 = (String) args[0];
+
+            // setting up the q variable to get sent as the string to translate
             String q = "q=\"" + s1 + "\"";
             String[] cmd = {"curl", "-X", "POST", "http://localhost:5000/translate", "-d", q, "-d", "source=auto", "-d", "target=en"};
 
+            // we will append the translation to itself as we receive it
             String translation = "";
             try{
+
+                // Run the curl command and read the input stream and add it to our translation
                 Process process = Runtime.getRuntime().exec(cmd);
                 InputStream stdout = process.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
@@ -72,19 +77,22 @@ public class EnglishTranslate implements Function {
                 while ((line = reader.readLine()) != null) {
                     translation = translation + line;
                 }
-                System.out.println(translation);
+                // System.out.println(translation);
 
+                // read the "translatedText" field from the json
                 String jsonString = translation;
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {
                     JsonNode jsonNode = objectMapper.readTree(jsonString);
                     String name = jsonNode.get("translatedText").asText();
+
+                    // strip off quotation marks
                     String result = name.substring(1, name.length() - 1);
-                    // System.out.println("Name: " + name);
                     return result;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                // if json fails to parse, return whole json String
                 return translation;
 
             } catch (IOException e) {
@@ -92,6 +100,7 @@ public class EnglishTranslate implements Function {
             }
            
         }
+        // Return error if given improper arguments
         return new EvalError(EvalErrorMessage.expects_one_string(ControlFunctionRegistry.getFunctionName(this)));
     }
 
