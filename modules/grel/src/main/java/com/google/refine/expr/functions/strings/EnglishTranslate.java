@@ -79,8 +79,9 @@ public class EnglishTranslate implements Function {
                 try {
                     JsonNode jsonNode = objectMapper.readTree(jsonString);
                     String name = jsonNode.get("translatedText").asText();
+                    String result = name.substring(1, name.length() - 1);
                     // System.out.println("Name: " + name);
-                    return name;
+                    return result;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
