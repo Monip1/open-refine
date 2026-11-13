@@ -13,7 +13,7 @@ notice, this list of conditions and the following disclaimer.
 copyright notice, this list of conditions and the following disclaimer
 in the documentation and/or other materials provided with the
 distribution.
-    * Neither the name of Google Inc. nor the names of its
+    * Neither the translatedText of Google Inc. nor the translatedTexts of its
 contributors may be used to endorse or promote products derived from
 this software without specific prior written permission.
 
@@ -84,10 +84,10 @@ public class EnglishTranslate implements Function {
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {
                     JsonNode jsonNode = objectMapper.readTree(jsonString);
-                    String name = jsonNode.get("translatedText").asText();
+                    String translatedText = jsonNode.get("translatedText").asText();
 
                     // strip off quotation marks
-                    String result = name.substring(1, name.length() - 1);
+                    String result = translatedText.substring(1, translatedText.length() - 1);
                     return result;
                 } catch (Exception e) {
                     e.printStackTrace();
